@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AgentMetrics } from '../types';
 import { HIVA_TARGETS, NON_HIVA_TARGETS } from '../constants';
 import { checkGatekeeper } from '../utils/calculations';
-import { AlertCircle, CheckCircle2, Search, SlidersHorizontal } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Search } from 'lucide-react';
 
 interface AgentTableProps {
   agents: AgentMetrics[];
@@ -66,9 +66,8 @@ export const AgentTable: React.FC<AgentTableProps> = ({ agents }) => {
                     <th className="px-6 py-2 font-medium text-center">CSAT</th>
                     <th className="px-6 py-2 font-medium text-center">NE CRT</th>
                     <th className="px-6 py-2 font-medium text-center">AHT</th>
-                    <th className="px-6 py-2 font-medium text-center">QA Score</th>
-                    <th className="px-6 py-2 font-medium text-center">Aux</th>
-                    <th className="px-6 py-2 font-medium text-center">Leave</th>
+                    <th className="px-6 py-2 font-medium text-center">Triage</th>
+                    <th className="px-6 py-2 font-medium text-center">LG</th>
                 </tr>
             </thead>
             <tbody>
@@ -121,14 +120,11 @@ export const AgentTable: React.FC<AgentTableProps> = ({ agents }) => {
                             <td className={`px-6 py-4 text-center font-bold ${agent.aht <= targets.aht ? 'text-emerald-600' : 'text-rose-500'}`}>
                                 {agent.aht}m
                             </td>
-                            <td className={`px-6 py-4 text-center font-bold ${agent.qaScore >= targets.qaScore ? 'text-emerald-600' : 'text-amber-500'}`}>
-                                {agent.qaScore}%
+                            <td className={`px-6 py-4 text-center font-bold ${agent.triageSla >= targets.triageSla ? 'text-emerald-600' : 'text-rose-500'}`}>
+                                {agent.triageSla}%
                             </td>
-                            <td className={`px-6 py-4 text-center font-bold ${agent.productiveAux >= targets.productiveAux ? 'text-slate-600' : 'text-rose-500'}`}>
-                                {agent.productiveAux}%
-                            </td>
-                            <td className={`px-6 py-4 text-center font-bold rounded-r-2xl ${agent.unplannedLeave <= targets.unplannedLeave ? 'text-slate-600' : 'text-rose-500'}`}>
-                                {agent.unplannedLeave}
+                            <td className={`px-6 py-4 text-center font-bold rounded-r-2xl ${agent.lg >= targets.lg ? 'text-emerald-600' : 'text-rose-500'}`}>
+                                {agent.lg}%
                             </td>
                         </tr>
                     );

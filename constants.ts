@@ -5,10 +5,13 @@ export const HIVA_TARGETS: KPITargets = {
   neCrt: 85,
   aht: 24,
   triageSla: 90,
+  lg: 42, // Target 42%
   qaScore: 90,
   qaGate: 85,
   productiveAux: 90,
   unplannedLeave: 1,
+  raScore: 90,
+  hvaIsTimeSla: 90,
 };
 
 export const NON_HIVA_TARGETS: KPITargets = {
@@ -16,6 +19,7 @@ export const NON_HIVA_TARGETS: KPITargets = {
   neCrt: 85,
   aht: 24,
   triageSla: 90,
+  lg: 42, // Assuming same target or default
   qaScore: 90,
   qaGate: 85,
   productiveAux: 90,
@@ -32,9 +36,12 @@ export const MOCK_AGENTS: AgentMetrics[] = [
     neCrt: 93.0,
     aht: 22.11,
     triageSla: 85.71,
-    qaScore: 76.2, // Below gate
+    lg: 45.0,
+    qaScore: 76.2, 
     productiveAux: 92,
     unplannedLeave: 0,
+    raScore: 78.5,
+    hvaIsTimeSla: 88.0,
     avatarUrl: 'https://picsum.photos/seed/duyen/200',
   },
   {
@@ -45,9 +52,12 @@ export const MOCK_AGENTS: AgentMetrics[] = [
     neCrt: 88.0,
     aht: 19.5,
     triageSla: 95.0,
+    lg: 52.0,
     qaScore: 88.0,
     productiveAux: 95,
     unplannedLeave: 0,
+    raScore: 92.0,
+    hvaIsTimeSla: 94.0,
     avatarUrl: 'https://picsum.photos/seed/nguyen/200',
   },
   {
@@ -58,9 +68,12 @@ export const MOCK_AGENTS: AgentMetrics[] = [
     neCrt: 80.0,
     aht: 25.0,
     triageSla: 80.0,
-    qaScore: 82.0, // Below gate
-    productiveAux: 88, // Below gate
-    unplannedLeave: 2, // Below gate
+    lg: 38.0,
+    qaScore: 82.0, 
+    productiveAux: 88, 
+    unplannedLeave: 2, 
+    raScore: 75.0,
+    hvaIsTimeSla: 70.0,
     avatarUrl: 'https://picsum.photos/seed/tran/200',
   },
   {
@@ -71,6 +84,7 @@ export const MOCK_AGENTS: AgentMetrics[] = [
     neCrt: 87.0,
     aht: 19.13,
     triageSla: 86.96,
+    lg: 43.0,
     qaScore: 95.24,
     productiveAux: 91,
     unplannedLeave: 0,
@@ -80,11 +94,12 @@ export const MOCK_AGENTS: AgentMetrics[] = [
     id: '5',
     name: 'Pham Thi D',
     team: 'NON_HIVA',
-    csat: 72.0, // Below target but might pass gate
+    csat: 72.0, 
     neCrt: 86.0,
     aht: 23.0,
     triageSla: 92.0,
-    qaScore: 84.0, // Fail gate
+    lg: 40.0,
+    qaScore: 84.0, 
     productiveAux: 93,
     unplannedLeave: 1,
     avatarUrl: 'https://picsum.photos/seed/pham/200',
@@ -97,14 +112,14 @@ export const MOCK_AGENTS: AgentMetrics[] = [
     neCrt: 89.0,
     aht: 21.0,
     triageSla: 94.0,
+    lg: 48.0,
     qaScore: 87.0,
     productiveAux: 96,
     unplannedLeave: 0,
     avatarUrl: 'https://picsum.photos/seed/hoang/200',
   },
-  // Adding more to match the 10 HIVA / 7 Non-HIVA count roughly
-  { id: '7', name: 'Agent H1', team: 'HIVA', csat: 82, neCrt: 86, aht: 20, triageSla: 91, qaScore: 91, productiveAux: 92, unplannedLeave: 0 },
-  { id: '8', name: 'Agent H2', team: 'HIVA', csat: 83, neCrt: 87, aht: 21, triageSla: 92, qaScore: 84, productiveAux: 90, unplannedLeave: 0 },
-  { id: '9', name: 'Agent H3', team: 'HIVA', csat: 79, neCrt: 84, aht: 23, triageSla: 89, qaScore: 86, productiveAux: 91, unplannedLeave: 1 },
-  { id: '10', name: 'Agent N1', team: 'NON_HIVA', csat: 75, neCrt: 86, aht: 22, triageSla: 91, qaScore: 88, productiveAux: 94, unplannedLeave: 0 },
+  { id: '7', name: 'Agent H1', team: 'HIVA', csat: 82, neCrt: 86, aht: 20, triageSla: 91, lg: 44, qaScore: 91, productiveAux: 92, unplannedLeave: 0, raScore: 90, hvaIsTimeSla: 92 },
+  { id: '8', name: 'Agent H2', team: 'HIVA', csat: 83, neCrt: 87, aht: 21, triageSla: 92, lg: 41, qaScore: 84, productiveAux: 90, unplannedLeave: 0, raScore: 85, hvaIsTimeSla: 88 },
+  { id: '9', name: 'Agent H3', team: 'HIVA', csat: 79, neCrt: 84, aht: 23, triageSla: 89, lg: 39, qaScore: 86, productiveAux: 91, unplannedLeave: 1, raScore: 88, hvaIsTimeSla: 89 },
+  { id: '10', name: 'Agent N1', team: 'NON_HIVA', csat: 75, neCrt: 86, aht: 22, triageSla: 91, lg: 46, qaScore: 88, productiveAux: 94, unplannedLeave: 0 },
 ];

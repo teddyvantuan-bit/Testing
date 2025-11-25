@@ -29,7 +29,6 @@ const parseCSV = (csvText: string): AgentMetrics[] => {
     });
 
     // Map CSV columns to our AgentMetrics type
-    // Expected CSV headers: Name, Team, CSAT, NE CRT, AHT, Triage SLA, QA Score, Productive Aux, Unplanned Leave
     if (row['name']) {
       agents.push({
         id: `row-${i}`,
@@ -38,10 +37,16 @@ const parseCSV = (csvText: string): AgentMetrics[] => {
         csat: parseFloat(row['csat']) || 0,
         neCrt: parseFloat(row['ne crt'] || row['necrt']) || 0,
         aht: parseFloat(row['aht']) || 0,
-        triageSla: parseFloat(row['triage sla'] || row['triagesla']) || 0,
+        triageSla: parseFloat(row['triage sla'] || row['triagesla'] || row['triage time sla']) || 0,
+        lg: parseFloat(row['lg'] || row['lead gen'] || row['lg%']) || 0, // New LG parsing
         qaScore: parseFloat(row['qa score'] || row['qascore']) || 0,
         productiveAux: parseFloat(row['productive aux'] || row['productiveaux']) || 0,
         unplannedLeave: parseFloat(row['unplanned leave'] || row['unplannedleave']) || 0,
+        
+        // Optional Columns for Deep Dive if they exist
+        raScore: parseFloat(row['ra score'] || row['ra']) || undefined,
+        hvaIsTimeSla: parseFloat(row['hva is time sla'] || row['hva sla'] || row['is time sla']) || undefined,
+        
         avatarUrl: `https://ui-avatars.com/api/?name=${row['name']}&background=random`
       });
     }

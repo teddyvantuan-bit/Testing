@@ -15,16 +15,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ agents }) => {
 
   const calculateAvg = (list: AgentMetrics[], key: keyof AgentMetrics) => {
     if (list.length === 0) return 0;
-    const sum = list.reduce((acc, curr) => acc + (curr[key] as number), 0);
-    return Number((sum / list.length).toFixed(2));
+    // Filter out undefined values for optional metrics
+    const validValues = list.filter(a => a[key] !== undefined).map(a => a[key] as number);
+    if (validValues.length === 0) return 0;
+    
+    const sum = validValues.reduce((acc, curr) => acc + curr, 0);
+    return Number((sum / validValues.length).toFixed(2));
   };
 
   const hivaStats = {
     csat: calculateAvg(hivaAgents, 'csat'),
     neCrt: calculateAvg(hivaAgents, 'neCrt'),
     aht: calculateAvg(hivaAgents, 'aht'),
-    qaScore: calculateAvg(hivaAgents, 'qaScore'),
     triageSla: calculateAvg(hivaAgents, 'triageSla'),
+    lg: calculateAvg(hivaAgents, 'lg'),
     qualifiedCount: hivaAgents.filter(a => checkGatekeeper(a, HIVA_TARGETS).passed).length
   };
 
@@ -32,8 +36,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ agents }) => {
     csat: calculateAvg(nonHivaAgents, 'csat'),
     neCrt: calculateAvg(nonHivaAgents, 'neCrt'),
     aht: calculateAvg(nonHivaAgents, 'aht'),
-    qaScore: calculateAvg(nonHivaAgents, 'qaScore'),
     triageSla: calculateAvg(nonHivaAgents, 'triageSla'),
+    lg: calculateAvg(nonHivaAgents, 'lg'),
     qualifiedCount: nonHivaAgents.filter(a => checkGatekeeper(a, NON_HIVA_TARGETS).passed).length
   };
 
@@ -43,11 +47,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ agents }) => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
             <h2 className="text-3xl font-bold text-slate-700 tracking-tight">Executive Summary</h2>
-            <p className="text-slate-400 mt-1 text-lg font-medium">M11 Performance Review & Audit Status</p>
+            <p className="text-slate-400 mt-1 text-lg font-medium">Performance Review & Audit Status</p>
         </div>
         <div className="flex gap-2">
             <span className="px-4 py-1.5 bg-white border border-slate-100 rounded-xl text-sm font-semibold text-slate-500 shadow-sm text-center min-w-[100px]">
-                Nov 2024
+                Current
             </span>
         </div>
       </div>
@@ -73,7 +77,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ agents }) => {
           </div>
       </section>
 
-      {/* HIVA Detail Section */}
+      {/* HIVA Detail Section - DEEP DIVE */}
       <section>
         <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -85,11 +89,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ agents }) => {
                 <span className="text-sm font-bold text-blue-600">81%</span>
             </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             <KPICard title="CSAT" value={hivaStats.csat} target={HIVA_TARGETS.csat} />
             <KPICard title="NE CRT" value={hivaStats.neCrt} target={HIVA_TARGETS.neCrt} />
             <KPICard title="AHT" value={hivaStats.aht} target={HIVA_TARGETS.aht} unit="m" type="lowerIsBetter" />
-            <KPICard title="QA Score" value={hivaStats.qaScore} target={HIVA_TARGETS.qaScore} />
+            <KPICard title="Triage SLA" value={hivaStats.triageSla} target={HIVA_TARGETS.triageSla} />
+            <KPICard title="LG" value={hivaStats.lg} target={HIVA_TARGETS.lg} />
         </div>
       </section>
 
@@ -105,11 +110,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ agents }) => {
                 <span className="text-sm font-bold text-emerald-600">74%</span>
             </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             <KPICard title="CSAT" value={nonHivaStats.csat} target={NON_HIVA_TARGETS.csat} />
             <KPICard title="NE CRT" value={nonHivaStats.neCrt} target={NON_HIVA_TARGETS.neCrt} />
             <KPICard title="AHT" value={nonHivaStats.aht} target={NON_HIVA_TARGETS.aht} unit="m" type="lowerIsBetter" />
-            <KPICard title="QA Score" value={nonHivaStats.qaScore} target={NON_HIVA_TARGETS.qaScore} />
+            <KPICard title="Triage SLA" value={nonHivaStats.triageSla} target={NON_HIVA_TARGETS.triageSla} />
+            <KPICard title="LG" value={nonHivaStats.lg} target={NON_HIVA_TARGETS.lg} />
         </div>
       </section>
     </div>

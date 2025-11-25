@@ -5,10 +5,13 @@ export interface KPITargets {
   neCrt: number; // Percentage
   aht: number; // Minutes
   triageSla: number; // Percentage
+  lg: number; // Percentage (New metric, Target 42%)
   qaScore: number; // Percentage
   qaGate: number; // Percentage (85%)
   productiveAux: number; // Percentage (90%)
   unplannedLeave: number; // Days (1)
+  raScore?: number; 
+  hvaIsTimeSla?: number;
 }
 
 export interface AgentMetrics {
@@ -19,23 +22,16 @@ export interface AgentMetrics {
   neCrt: number;
   aht: number;
   triageSla: number;
+  lg: number; // New metric
   qaScore: number;
   productiveAux: number;
   unplannedLeave: number;
+  raScore?: number;
+  hvaIsTimeSla?: number;
   avatarUrl?: string;
 }
 
 export interface GateStatus {
   passed: boolean;
   failedReason?: string[];
-}
-
-export interface CoachingLog {
-  id: string;
-  agentId: string;
-  date: string;
-  metricFocus: string; // e.g., "QA Score"
-  observation: string;
-  actionPlan: string;
-  commitment: string;
 }
