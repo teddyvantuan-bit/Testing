@@ -1,8 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { AgentTable } from './components/AgentTable';
-import { CoachingTool } from './components/CoachingTool';
 import { SettingsModal } from './components/SettingsModal';
 import { MOCK_AGENTS } from './constants';
 import { fetchSheetData } from './services/csvService';
@@ -12,7 +12,13 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [agents, setAgents] = useState<AgentMetrics[]>(MOCK_AGENTS);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [sheetUrl, setSheetUrl] = useState(() => localStorage.getItem('bpo_sheet_url') || '');
+  const [sheetUrl, setSheetUrl] = useState(() => {
+    // Safety check for localStorage in case of SSR or strict environments
+    if (typeof window !== 'undefined' && window.localStorage) {
+        return localStorage.getItem('bpo_sheet_url') || '';
+    }
+    return '';
+  });
 
   // Load data from Sheet if URL exists
   useEffect(() => {
@@ -33,7 +39,9 @@ const App: React.FC = () => {
 
   const handleSaveSettings = (newUrl: string) => {
     setSheetUrl(newUrl);
-    localStorage.setItem('bpo_sheet_url', newUrl);
+    if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('bpo_sheet_url', newUrl);
+    }
     setIsSettingsOpen(false);
   };
 
@@ -49,7 +57,6 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto">
             {activeTab === 'dashboard' && <Dashboard agents={agents} />}
             {activeTab === 'agents' && <AgentTable agents={agents} />}
-            {activeTab === 'coaching' && <CoachingTool agents={agents} />}
         </div>
       </main>
 

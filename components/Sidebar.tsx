@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { LayoutDashboard, Users, BookOpen, Settings, BarChart2 } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, BarChart2 } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: string;
@@ -11,7 +12,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, onOpe
   const menuItems = [
     { id: 'dashboard', label: 'Overview', icon: <LayoutDashboard size={20} /> },
     { id: 'agents', label: 'Agent Matrix', icon: <Users size={20} /> },
-    { id: 'coaching', label: 'AI Coaching', icon: <BookOpen size={20} /> },
   ];
 
   return (
